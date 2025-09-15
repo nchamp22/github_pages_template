@@ -4,44 +4,37 @@ title: "About Me"
 
 ## Background
 
-Write a brief introduction about yourself here. Include:
-
-- Your academic background
-- Your interest in data science
-- Your career goals
-- Any relevant experience or projects
+I am an Applied Statistics Major at Brigham Young University. I love using data to solve real problems. 
 
 ## Education
 
-- **[Your Degree]** - [University Name], [Year]
-- **Relevant Coursework**: Statistics, Data Analysis, Programming, etc.
+- **Statistics (BS): Applied Statistics & Analytics Emphasis** - Brigham Young University, Sept. 2024 - PRESENT
+- **Relevant Coursework**: Statistical Modeling, Single and Multivariate Calculus, Pobability and Inference, Python Programming, Excel. 
 
 ## Skills & Interests
 
 ### Technical Skills
-- **Programming**: Python
+- **Programming**: Python, R
 - **Data Analysis**: Pandas, NumPy
 - **Visualization**: Matplotlib, Seaborn
 - **Machine Learning**: Scikit-learn
 - **Tools**: Jupyter Notebooks, Git/GitHub
 
 ### Areas of Interest
-- [Your specific interests, e.g., environmental data, healthcare analytics, finance, etc.]
-- [Other areas you're curious about]
+- Healthcare analytics
+- Finance
+- Crime data
 
 ## Goals
 
-Describe what you hope to achieve through your data science journey:
-
-- Short-term learning objectives
-- Long-term career aspirations
-- Types of problems you want to solve
+- Work on projects related to finance and public health
+- Learn more machine learning techniques
 
 ## Contact
 
-- **Email**: your.email@example.com
-- **GitHub**: [github.com/your-username](https://github.com/your-username)
-- **LinkedIn**: [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
+- **Email**: nchamp@byu.du
+- **GitHub**: [github.com/nchamp22](https://github.com/nchamp22)
+- **LinkedIn**: [linkedin.com/in/noah-champagne](https://www.linkedin.com/in/noah-champagne-98207a2a9/)
 
 ---
 
