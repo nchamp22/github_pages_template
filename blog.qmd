@@ -1,16 +1,152 @@
 ---
-title: "New Project"
+title: |
+  Data Science Blog: Working with Data in Pandas Tutorial
 format: html
 ---
 
-# My New Project 🚀
+In this tutorial, you will learn how to import a dataset, filter the data, and create visualizations using Pandas to explore and analyze it. Specifically, we will work with a dataset containing U.S. cancer incidence counts (1999–2022), grouped by race, cancer site, age group, and sex.
 
-This is where I describe my new project.
+## Introduction to the Data
 
-## Overview
-Write a brief description of the project here.
+As mentioned in the blog introduction, we will be working with a dataset containing U.S. cancer incidence counts from 1999 to 2022.
 
-## Details
-- What I did
-- Tools used
-- Results
+The dataset includes the following variables:
+
+- **Race**: American Indian or Alaska Native, Asian or Pacific Islander, Black or African American, White, and Other.
+- **Cancer site**: The location of the cancer, such as stomach, small intestine, tonsil, salivary gland, and others.
+- **Age**: Grouped into 4-year intervals from <1 in some cases to 85+ (e.g., 20–24, 25–29, etc.).
+- **Rates**: Calculated per 100,000 people.
+
+The dataset contains 12,532 rows and represents a subset of all cancer data collected during this period.
+
+### United States and Puerto Rico Cancer Statistics, 1999-2022 Incidence
+
+| Race                     | Race Code | Cancer Sites                                 | Cancer Sites Code | Age Groups   | Age Groups Code | Sex    | Sex Code | Count |
+|--------------------------|-----------|---------------------------------------------|-----------------|--------------|----------------|--------|----------|-------|
+| Asian or Pacific Islander | A-PI      | Lung and Bronchus                            | 22030           | 85+ years    | 85             | Female | F        | 5305  |
+| Asian or Pacific Islander | A-PI      | Lung and Bronchus                            | 22030           | 85+ years    | 85             | Male   | M        | 5773  |
+| Asian or Pacific Islander | A-PI      | Trachea, Mediastinum and Other Respiratory Organs | 22060           | 1-4 years    | 1-4            | Female | F        | 16    |
+| Asian or Pacific Islander | A-PI      | Trachea, Mediastinum and Other Respiratory Organs | 22060           | 15-19 years  | 15-19          | Male   | M        | 53    |
+
+## Loading in the Data
+Now that we understand what we are working with, we can load in the data. In Pandas, we can read in a CSV file with the following code **(click on the dropdown arrow beside the word "Code" to see the code and comments that go along with it)**:
+
+
+```{python}
+import pandas as pd
+
+df = pd.read_csv("cancer.csv")
+df.head()
+```
+## Filtering the Data
+
+In our cancer.csv file, some data is not relevant to this analysis. We are only interested in specific cancer types and known races, so we will exclude entries where the cancer type is "All Invasive Cancer Sites Combined" and where the race is "Other Races and Unknown combined". This allows us to focus on the cancers and races of interest.
+
+Additionally, the dataset contains a "Notes" column that does not contain any useful data, so we will remove it.
+
+Note that spelling is crucial in this step. In this dataset from the U.S. government’s data.gov website, "All Invasive Cancer Sites Combined" uses an uppercase "C" in "Combined," whereas "Other Races and Unknown combined" uses a lowercase "c."
+
+```{python}
+import pandas as pd
+
+df = pd.read_csv("cancer.csv")
+
+# Filter the rows
+df_filtered = df[
+    (df['Cancer Sites'] != "All Invasive Cancer Sites Combined") &
+    (df['Race'] != "Other Races and Unknown combined")
+]
+
+# Drop the 'Notes' column if it exists
+df_filtered = df_filtered.drop(columns=['Notes'])
+
+# Drop rows where all remaining values are NaN
+df_filtered = df_filtered.dropna(how='all')
+
+# Display the filtered data
+df_filtered
+```
+
+## Plotting with Pandas
+
+Now that we have our data cleaned and ready, it is time to explore some of Pandas' visualization tools. In this tutorial, we will specifically look at the following plots:
+
+1. Bar charts  
+2. Stacked bar charts  
+3. Box plots  
+4. Heat maps  
+5. Pie charts  
+6. Scatter plots
+
+### 1. Bar Charts
+
+Bar charts are ideal for grouping cancer counts by variables such as cancer site or race. In Pandas, we can group data, sum the counts, and plot it. The `kind` parameter specifies the type of chart:
+
+```{python}
+df_filtered.groupby('Cancer Sites')['Count'].sum().sort_values().plot(kind='bar')
+```
+
+This graph is somewhat hard to interpret because the dataset contains many cancer sites. To make it more readable, we can focus on a subset of cancer sites. I chose: Stomach, Lung and Bronchus, Soft Tissue including Heart, Female Breast, Prostate, Kidney and Renal Pelvis, Brain, and Leukemias. 
+
+Here is the code for that, with accompanying comments. Notice how we create a specific list of sites we want to include and then use the `.isin()` method to filter for them when we generate the plot:
+
+```{python}
+# List of specific cancer sites
+selected_sites = [
+    "Stomach",
+    "Lung and Bronchus",
+    "Soft Tissue including Heart",
+    "Female Breast",
+    "Prostate",
+    "Kidney and Renal Pelvis",
+    "Brain",
+    "Leukemias"
+]
+
+# Plot only the selected sites using the 
+df[df['Cancer Sites'].isin(selected_sites)].groupby('Cancer Sites')['Count'].sum().sort_values().plot(kind='bar')
+```
+
+From this chart, we can easily see that certain cancers—such as Lung, Prostate, and Breast—are much more prevalent than others like Stomach or Brain cancer.
+
+### 2. Stacked Bar Charts
+
+When we want to visualize how cancer counts are distributed across different groups, such as sex, age, or race, stacked bar charts are useful
+
+```{python}
+# List of specific cancer sites, expanded
+selected_sites = [
+    "Stomach",
+    "Lung and Bronchus",
+    "Soft Tissue including Heart",
+    "Female Breast",
+    "Prostate",
+    "Kidney and Renal Pelvis",
+    "Brain",
+    "Leukemias",
+    "Oral Cavity and Pharynx",
+    "Salivary Gland",
+    "Esophagus",
+    "Liver and Intrahepatic Bile Duct",
+    "Melanoma of the Skin",
+    "Non-Hodgkin Lymphoma",
+    "Eye and Orbit",
+    "Endocrine System",
+    "Thyroid"
+]
+
+# Filter for the selected cancer sites
+df_selected = df_filtered[df_filtered['Cancer Sites'].isin(selected_sites)]
+
+# Pivot table: Cancer Sites x Sex
+df_pivot_sex = df_selected.pivot_table(
+    index='Cancer Sites',
+    columns='Sex',
+    values='Count',
+    aggfunc='sum'
+)
+
+# Plot stacked bar chart
+df_pivot_sex.plot(kind='bar', stacked=True)
+```
+This type of chart allows us to analyze patterns by sex. For example, Prostate cancer occurs only in biological males, and Female Breast cancer occurs only in biological females. For other cancers, such as Lung, the counts are similar for both sexes. Cancers of the endocrine system and thyroid appear more prevalent in males, whereas oral cavity and kidney cancers appear slightly more common in females.

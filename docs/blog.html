@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>New Project – Noah Champagne - Data Science Portfolio</title>
+<title>Data Science Blog: Working with Data in Pandas Tutorial – Noah Champagne - Data Science Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -103,6 +103,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -191,10 +194,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#my-new-project" id="toc-my-new-project" class="nav-link active" data-scroll-target="#my-new-project">My New Project 🚀</a>
+  <li><a href="#introduction-to-the-data" id="toc-introduction-to-the-data" class="nav-link active" data-scroll-target="#introduction-to-the-data">Introduction to the Data</a>
   <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#details" id="toc-details" class="nav-link" data-scroll-target="#details">Details</a></li>
+  <li><a href="#united-states-and-puerto-rico-cancer-statistics-1999-2022-incidence" id="toc-united-states-and-puerto-rico-cancer-statistics-1999-2022-incidence" class="nav-link" data-scroll-target="#united-states-and-puerto-rico-cancer-statistics-1999-2022-incidence">United States and Puerto Rico Cancer Statistics, 1999-2022 Incidence</a></li>
+  </ul></li>
+  <li><a href="#loading-in-the-data" id="toc-loading-in-the-data" class="nav-link" data-scroll-target="#loading-in-the-data">Loading in the Data</a></li>
+  <li><a href="#filtering-the-data" id="toc-filtering-the-data" class="nav-link" data-scroll-target="#filtering-the-data">Filtering the Data</a></li>
+  <li><a href="#plotting-with-pandas" id="toc-plotting-with-pandas" class="nav-link" data-scroll-target="#plotting-with-pandas">Plotting with Pandas</a>
+  <ul class="collapse">
+  <li><a href="#bar-charts" id="toc-bar-charts" class="nav-link" data-scroll-target="#bar-charts">1. Bar Charts</a></li>
+  <li><a href="#stacked-bar-charts" id="toc-stacked-bar-charts" class="nav-link" data-scroll-target="#stacked-bar-charts">2. Stacked Bar Charts</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -204,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">New Project</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><p>Data Science Blog: Working with Data in Pandas Tutorial</p></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -221,20 +230,495 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="my-new-project" class="level1">
-<h1>My New Project 🚀</h1>
-<p>This is where I describe my new project.</p>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Write a brief description of the project here.</p>
-</section>
-<section id="details" class="level2">
-<h2 class="anchored" data-anchor-id="details">Details</h2>
+<p>In this tutorial, you will learn how to import a dataset,filter the data, and create visualizations using Pandas to explore and analyze it. Specifically, you will work with a dataset containing US cancer incidence rates (1999–2022), grouped by race, cancer site, age group, and sex.</p>
+<section id="introduction-to-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-the-data">Introduction to the Data</h2>
+<p>As mentioned in the blog introduction, we will be working with a dataset containing U.S. cancer incidence rates from 1999 to 2022.</p>
+<p>The dataset includes the following variables:</p>
 <ul>
-<li>What I did</li>
-<li>Tools used</li>
-<li>Results</li>
+<li><strong>Race</strong>: American Indian or Alaska Native, Asian or Pacific Islander, Black or African American, White, and Other.</li>
+<li><strong>Cancer site</strong>: The location of the cancer, such as stomach, small intestine, tonsil, salivary gland, and others.</li>
+<li><strong>Age</strong>: Grouped into 4-year intervals from &lt;1 in some cases to 85+ (e.g., 20–24, 25–29, etc.).</li>
+<li><strong>Rates</strong>: Calculated per 100,000 people.</li>
 </ul>
+<p>The dataset contains 12,532 rows and represents a subset of all cancer data collected during this period.</p>
+<section id="united-states-and-puerto-rico-cancer-statistics-1999-2022-incidence" class="level3">
+<h3 class="anchored" data-anchor-id="united-states-and-puerto-rico-cancer-statistics-1999-2022-incidence">United States and Puerto Rico Cancer Statistics, 1999-2022 Incidence</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 7%">
+<col style="width: 29%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Race</th>
+<th>Race Code</th>
+<th>Cancer Sites</th>
+<th>Cancer Sites Code</th>
+<th>Age Groups</th>
+<th>Age Groups Code</th>
+<th>Sex</th>
+<th>Sex Code</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Asian or Pacific Islander</td>
+<td>A-PI</td>
+<td>Lung and Bronchus</td>
+<td>22030</td>
+<td>85+ years</td>
+<td>85</td>
+<td>Female</td>
+<td>F</td>
+<td>5305</td>
+</tr>
+<tr class="even">
+<td>Asian or Pacific Islander</td>
+<td>A-PI</td>
+<td>Lung and Bronchus</td>
+<td>22030</td>
+<td>85+ years</td>
+<td>85</td>
+<td>Male</td>
+<td>M</td>
+<td>5773</td>
+</tr>
+<tr class="odd">
+<td>Asian or Pacific Islander</td>
+<td>A-PI</td>
+<td>Trachea, Mediastinum and Other Respiratory Organs</td>
+<td>22060</td>
+<td>1-4 years</td>
+<td>1-4</td>
+<td>Female</td>
+<td>F</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<td>Asian or Pacific Islander</td>
+<td>A-PI</td>
+<td>Trachea, Mediastinum and Other Respiratory Organs</td>
+<td>22060</td>
+<td>15-19 years</td>
+<td>15-19</td>
+<td>Male</td>
+<td>M</td>
+<td>53</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="loading-in-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="loading-in-the-data">Loading in the Data</h2>
+<p>Now that we understand what we are working with, we can load in the data. In Pandas, we can read in a CSV file with the following code <strong>(click on the dropdown arrow beside the word “Code” to see the code and comments that go along with it)</strong>:</p>
+<div id="d6b9e5f2" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"cancer.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Notes</th>
+<th data-quarto-table-cell-role="th">Race</th>
+<th data-quarto-table-cell-role="th">Race Code</th>
+<th data-quarto-table-cell-role="th">Cancer Sites</th>
+<th data-quarto-table-cell-role="th">Cancer Sites Code</th>
+<th data-quarto-table-cell-role="th">Age Groups</th>
+<th data-quarto-table-cell-role="th">Age Groups Code</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Sex Code</th>
+<th data-quarto-table-cell-role="th">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>NaN</td>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>All Invasive Cancer Sites Combined</td>
+<td>0</td>
+<td>&lt; 1 year</td>
+<td>1</td>
+<td>Female</td>
+<td>F</td>
+<td>123.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>NaN</td>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>All Invasive Cancer Sites Combined</td>
+<td>0</td>
+<td>&lt; 1 year</td>
+<td>1</td>
+<td>Male</td>
+<td>M</td>
+<td>139.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>NaN</td>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>All Invasive Cancer Sites Combined</td>
+<td>0</td>
+<td>1-4 years</td>
+<td>1-4</td>
+<td>Female</td>
+<td>F</td>
+<td>378.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>NaN</td>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>All Invasive Cancer Sites Combined</td>
+<td>0</td>
+<td>1-4 years</td>
+<td>1-4</td>
+<td>Male</td>
+<td>M</td>
+<td>520.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>NaN</td>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>All Invasive Cancer Sites Combined</td>
+<td>0</td>
+<td>5-9 years</td>
+<td>5-9</td>
+<td>Female</td>
+<td>F</td>
+<td>288.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="filtering-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="filtering-the-data">Filtering the Data</h2>
+<p>In our cancer.csv file, some data is not relevant to my analysis. I am only interested in specific cancer types and known races, so I will exclude entries where the cancer type is “All Invasive Cancer Sites Combined” and where the race is “Other Races and Unknown combined”. This allows me to focus solely on the cancers and races of interest. We also have a “Notes” column that doesn’t contain any data, so let’s remove that too.</p>
+<p>Spelling is crucial in this step. In this dataset from the US government’s data.gov website, “All Invasive Cancer Sites Combined” uses an uppercase “C” in “Combined,”” whereas “Other Races and Unknown combined” uses a lowercase “c”.</p>
+<div id="ca6bb038" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"cancer.csv"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the rows</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df[</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">'Cancer Sites'</span>] <span class="op">!=</span> <span class="st">"All Invasive Cancer Sites Combined"</span>) <span class="op">&amp;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">'Race'</span>] <span class="op">!=</span> <span class="st">"Other Races and Unknown combined"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop the 'Notes' column if it exists</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df_filtered.drop(columns<span class="op">=</span>[<span class="st">'Notes'</span>])</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows where all remaining values are NaN</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df_filtered.dropna(how<span class="op">=</span><span class="st">'all'</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the filtered data</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>df_filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Race</th>
+<th data-quarto-table-cell-role="th">Race Code</th>
+<th data-quarto-table-cell-role="th">Cancer Sites</th>
+<th data-quarto-table-cell-role="th">Cancer Sites Code</th>
+<th data-quarto-table-cell-role="th">Age Groups</th>
+<th data-quarto-table-cell-role="th">Age Groups Code</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Sex Code</th>
+<th data-quarto-table-cell-role="th">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">38</th>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>Oral Cavity and Pharynx</td>
+<td>20010-20100</td>
+<td>20-24 years</td>
+<td>20-24</td>
+<td>Female</td>
+<td>F</td>
+<td>16.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">39</th>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>Oral Cavity and Pharynx</td>
+<td>20010-20100</td>
+<td>20-24 years</td>
+<td>20-24</td>
+<td>Male</td>
+<td>M</td>
+<td>19.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">40</th>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>Oral Cavity and Pharynx</td>
+<td>20010-20100</td>
+<td>25-29 years</td>
+<td>25-29</td>
+<td>Female</td>
+<td>F</td>
+<td>26.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">41</th>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>Oral Cavity and Pharynx</td>
+<td>20010-20100</td>
+<td>25-29 years</td>
+<td>25-29</td>
+<td>Male</td>
+<td>M</td>
+<td>28.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">42</th>
+<td>American Indian or Alaska Native</td>
+<td>1002-5</td>
+<td>Oral Cavity and Pharynx</td>
+<td>20010-20100</td>
+<td>30-34 years</td>
+<td>30-34</td>
+<td>Female</td>
+<td>F</td>
+<td>32.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10420</th>
+<td>White</td>
+<td>2106-3</td>
+<td>Male Breast, In Situ</td>
+<td>Breast-InSitu-Male</td>
+<td>65-69 years</td>
+<td>65-69</td>
+<td>Male</td>
+<td>M</td>
+<td>571.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">10421</th>
+<td>White</td>
+<td>2106-3</td>
+<td>Male Breast, In Situ</td>
+<td>Breast-InSitu-Male</td>
+<td>70-74 years</td>
+<td>70-74</td>
+<td>Male</td>
+<td>M</td>
+<td>511.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10422</th>
+<td>White</td>
+<td>2106-3</td>
+<td>Male Breast, In Situ</td>
+<td>Breast-InSitu-Male</td>
+<td>75-79 years</td>
+<td>75-79</td>
+<td>Male</td>
+<td>M</td>
+<td>443.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">10423</th>
+<td>White</td>
+<td>2106-3</td>
+<td>Male Breast, In Situ</td>
+<td>Breast-InSitu-Male</td>
+<td>80-84 years</td>
+<td>80-84</td>
+<td>Male</td>
+<td>M</td>
+<td>282.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10424</th>
+<td>White</td>
+<td>2106-3</td>
+<td>Male Breast, In Situ</td>
+<td>Breast-InSitu-Male</td>
+<td>85+ years</td>
+<td>85</td>
+<td>Male</td>
+<td>M</td>
+<td>167.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>10273 rows × 9 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="plotting-with-pandas" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-with-pandas">Plotting with Pandas</h2>
+<p>Now that we have our data cleaned and ready, it is time to explore some of Pandas’ visualization tools. In this tutorial, we will specifically look at the following plots:</p>
+<ol type="1">
+<li>Bar charts<br>
+</li>
+<li>Stacked bar charts<br>
+</li>
+<li>Box plots<br>
+</li>
+<li>Heat maps<br>
+</li>
+<li>Pie charts<br>
+</li>
+<li>Scatter plots</li>
+</ol>
+<section id="bar-charts" class="level3">
+<h3 class="anchored" data-anchor-id="bar-charts">1. Bar Charts</h3>
+<p>Bar charts are the perfect tool for grouping our cancer data by something specific like cancer sites or race. In Pandas, we can use the following code to group data, sum the counts, and plot it. Notice how the paramater <code>kind</code> is used to pick the type of chart:</p>
+<div id="eae3e352" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_filtered.groupby(<span class="st">'Cancer Sites'</span>)[<span class="st">'Count'</span>].<span class="bu">sum</span>().sort_values().plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="blog_files/figure-html/cell-4-output-1.png" width="562" height="780" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, this graph is a little hard to interpret because our dataset contains many different cancer sites. To make the graph more readable, let’s focus on just a handful of cancer sites: Stomach, Lung and Bronchus, Soft Tissue including Heart, Female Breast, Prostate, Kidney and Renal Pelvis, Brain, and Leukemias.</p>
+<p>Here is the code for that, with accompanying comments. Notice how we create a specific list of sites we want to include and then use the <code>.isin()</code> method to filter for them when we generate the plot:</p>
+<div id="02378822" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of specific cancer sites</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>selected_sites <span class="op">=</span> [</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Stomach"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lung and Bronchus"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Soft Tissue including Heart"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Female Breast"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Prostate"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kidney and Renal Pelvis"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Brain"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Leukemias"</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot only the selected sites using the </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'Cancer Sites'</span>].isin(selected_sites)].groupby(<span class="st">'Cancer Sites'</span>)[<span class="st">'Count'</span>].<span class="bu">sum</span>().sort_values().plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="blog_files/figure-html/cell-5-output-1.png" width="558" height="609" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From this chart, we can easily see that certain types of cancer—such as Lung, Prostate, and Breast—are much more prevelant than others like Stomach or brain cancer.</p>
+</section>
+<section id="stacked-bar-charts" class="level3">
+<h3 class="anchored" data-anchor-id="stacked-bar-charts">2. Stacked Bar Charts</h3>
+<p>When we want to have two groups in our plot, say, showing how incidence is distributed across races for each cancer type, we can use stacked bar charts.</p>
+<div id="0ce46fdb" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of specific cancer sites, expanded</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>selected_sites <span class="op">=</span> [</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Stomach"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lung and Bronchus"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Soft Tissue including Heart"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Female Breast"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Prostate"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kidney and Renal Pelvis"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Brain"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Leukemias"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Oral Cavity and Pharynx"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Salivary Gland"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Esophagus"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Liver and Intrahepatic Bile Duct"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Melanoma of the Skin"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Non-Hodgkin Lymphoma"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Eye and Orbit"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Endocrine System"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Thyroid"</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for the selected cancer sites</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>df_selected <span class="op">=</span> df_filtered[df_filtered[<span class="st">'Cancer Sites'</span>].isin(selected_sites)]</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot table: Cancer Sites x Sex</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>df_pivot_sex <span class="op">=</span> df_selected.pivot_table(</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'Cancer Sites'</span>,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'Sex'</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'Count'</span>,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">'sum'</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot stacked bar chart</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>df_pivot_sex.plot(kind<span class="op">=</span><span class="st">'bar'</span>, stacked<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="blog_files/figure-html/cell-6-output-1.png" width="558" height="642" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 <!-- -->
@@ -694,22 +1178,156 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "New Project"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># My New Project 🚀</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>This is where I describe my new project.</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Write a brief description of the project here.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Details</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What I did</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tools used</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> |</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">  Data Science Blog: Working with Data in Pandas Tutorial</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>In this tutorial, you will learn how to import a dataset,filter the data, and create visualizations using Pandas to explore and analyze it. Specifically, you will work with a dataset containing US cancer incidence rates (1999–2022), grouped by race, cancer site, age group, and sex.</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction to the Data</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>As mentioned in the blog introduction, we will be working with a dataset containing U.S. cancer incidence rates from 1999 to 2022.</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>The dataset includes the following variables:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Race**: American Indian or Alaska Native, Asian or Pacific Islander, Black or African American, White, and Other.</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cancer site**: The location of the cancer, such as stomach, small intestine, tonsil, salivary gland, and others.</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Age**: Grouped into 4-year intervals from &lt;1 in some cases to 85+ (e.g., 20–24, 25–29, etc.).</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rates**: Calculated per 100,000 people.</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>The dataset contains 12,532 rows and represents a subset of all cancer data collected during this period.</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### United States and Puerto Rico Cancer Statistics, 1999-2022 Incidence</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Race                     <span class="pp">|</span> Race Code <span class="pp">|</span> Cancer Sites                                 <span class="pp">|</span> Cancer Sites Code <span class="pp">|</span> Age Groups   <span class="pp">|</span> Age Groups Code <span class="pp">|</span> Sex    <span class="pp">|</span> Sex Code <span class="pp">|</span> Count <span class="pp">|</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------------------------|-----------|---------------------------------------------|-----------------|--------------|----------------|--------|----------|-------|</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Asian or Pacific Islander <span class="pp">|</span> A-PI      <span class="pp">|</span> Lung and Bronchus                            <span class="pp">|</span> 22030           <span class="pp">|</span> 85+ years    <span class="pp">|</span> 85             <span class="pp">|</span> Female <span class="pp">|</span> F        <span class="pp">|</span> 5305  <span class="pp">|</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Asian or Pacific Islander <span class="pp">|</span> A-PI      <span class="pp">|</span> Lung and Bronchus                            <span class="pp">|</span> 22030           <span class="pp">|</span> 85+ years    <span class="pp">|</span> 85             <span class="pp">|</span> Male   <span class="pp">|</span> M        <span class="pp">|</span> 5773  <span class="pp">|</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Asian or Pacific Islander <span class="pp">|</span> A-PI      <span class="pp">|</span> Trachea, Mediastinum and Other Respiratory Organs <span class="pp">|</span> 22060           <span class="pp">|</span> 1-4 years    <span class="pp">|</span> 1-4            <span class="pp">|</span> Female <span class="pp">|</span> F        <span class="pp">|</span> 16    <span class="pp">|</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Asian or Pacific Islander <span class="pp">|</span> A-PI      <span class="pp">|</span> Trachea, Mediastinum and Other Respiratory Organs <span class="pp">|</span> 22060           <span class="pp">|</span> 15-19 years  <span class="pp">|</span> 15-19          <span class="pp">|</span> Male   <span class="pp">|</span> M        <span class="pp">|</span> 53    <span class="pp">|</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading in the Data</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>Now that we understand what we are working with, we can load in the data. In Pandas, we can read in a CSV file with the following code **(click on the dropdown arrow beside the word "Code" to see the code and comments that go along with it)**:</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"cancer.csv"</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>df.head()</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Filtering the Data</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>In our cancer.csv file, some data is not relevant to my analysis. I am only interested in specific cancer types and known races, so I will exclude entries where the cancer type is "All Invasive Cancer Sites Combined" and where the race is "Other Races and Unknown combined". This allows me to focus solely on the cancers and races of interest. We also have a "Notes" column that doesn't contain any data, so let's remove that too. </span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>Spelling is crucial in this step. In this dataset from the US government’s data.gov website, "All Invasive Cancer Sites Combined" uses an uppercase "C" in "Combined,"" whereas "Other Races and Unknown combined" uses a lowercase "c".</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"cancer.csv"</span>)</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the rows</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df[</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">'Cancer Sites'</span>] <span class="op">!=</span> <span class="st">"All Invasive Cancer Sites Combined"</span>) <span class="op">&amp;</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">'Race'</span>] <span class="op">!=</span> <span class="st">"Other Races and Unknown combined"</span>)</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop the 'Notes' column if it exists</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df_filtered.drop(columns<span class="op">=</span>[<span class="st">'Notes'</span>])</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows where all remaining values are NaN</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df_filtered.dropna(how<span class="op">=</span><span class="st">'all'</span>)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the filtered data</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>df_filtered</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plotting with Pandas</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>Now that we have our data cleaned and ready, it is time to explore some of Pandas' visualization tools. In this tutorial, we will specifically look at the following plots:</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Bar charts  </span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Stacked bar charts  </span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Box plots  </span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Heat maps  </span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Pie charts  </span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Scatter plots</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Bar Charts</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>Bar charts are the perfect tool for grouping our cancer data by something specific like cancer sites or race. In Pandas, we can use the following code to group data, sum the counts, and plot it. Notice how the paramater <span class="in">`kind`</span> is used to pick the type of chart:</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>df_filtered.groupby(<span class="st">'Cancer Sites'</span>)[<span class="st">'Count'</span>].<span class="bu">sum</span>().sort_values().plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>As you can see, this graph is a little hard to interpret because our dataset contains many different cancer sites. To make the graph more readable, let's focus on just a handful of cancer sites: Stomach, Lung and Bronchus, Soft Tissue including Heart, Female Breast, Prostate, Kidney and Renal Pelvis, Brain, and Leukemias.  </span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>Here is the code for that, with accompanying comments. Notice how we create a specific list of sites we want to include and then use the <span class="in">`.isin()`</span> method to filter for them when we generate the plot:</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a><span class="co"># List of specific cancer sites</span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>selected_sites <span class="op">=</span> [</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Stomach"</span>,</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lung and Bronchus"</span>,</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Soft Tissue including Heart"</span>,</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Female Breast"</span>,</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Prostate"</span>,</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kidney and Renal Pelvis"</span>,</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Brain"</span>,</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Leukemias"</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot only the selected sites using the </span></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'Cancer Sites'</span>].isin(selected_sites)].groupby(<span class="st">'Cancer Sites'</span>)[<span class="st">'Count'</span>].<span class="bu">sum</span>().sort_values().plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>From this chart, we can easily see that certain types of cancer—such as Lung, Prostate, and Breast—are much more prevelant than others like Stomach or brain cancer. </span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Stacked Bar Charts</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>When we want to have two groups in our plot, say, showing how incidence is distributed across races for each cancer type, we can use stacked bar charts. </span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a><span class="co"># List of specific cancer sites, expanded</span></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>selected_sites <span class="op">=</span> [</span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Stomach"</span>,</span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lung and Bronchus"</span>,</span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Soft Tissue including Heart"</span>,</span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Female Breast"</span>,</span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Prostate"</span>,</span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kidney and Renal Pelvis"</span>,</span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Brain"</span>,</span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Leukemias"</span>,</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Oral Cavity and Pharynx"</span>,</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Salivary Gland"</span>,</span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Esophagus"</span>,</span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Liver and Intrahepatic Bile Duct"</span>,</span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Melanoma of the Skin"</span>,</span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Non-Hodgkin Lymphoma"</span>,</span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Eye and Orbit"</span>,</span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Endocrine System"</span>,</span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Thyroid"</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for the selected cancer sites</span></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>df_selected <span class="op">=</span> df_filtered[df_filtered[<span class="st">'Cancer Sites'</span>].isin(selected_sites)]</span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot table: Cancer Sites x Sex</span></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>df_pivot_sex <span class="op">=</span> df_selected.pivot_table(</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'Cancer Sites'</span>,</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'Sex'</span>,</span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'Count'</span>,</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">'sum'</span></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot stacked bar chart</span></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>df_pivot_sex.plot(kind<span class="op">=</span><span class="st">'bar'</span>, stacked<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

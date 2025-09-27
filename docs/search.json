@@ -2,21 +2,21 @@
   {
     "objectID": "blog.html",
     "href": "blog.html",
-    "title": "New Project",
+    "title": "Data Science Blog: Working with Data in Pandas Tutorial",
     "section": "",
-    "text": "This is where I describe my new project.\n\n\nWrite a brief description of the project here.\n\n\n\n\nWhat I did\nTools used\nResults"
+    "text": "In this tutorial, you will learn how to import a dataset,filter the data, and create visualizations using Pandas to explore and analyze it. Specifically, you will work with a dataset containing US cancer incidence rates (1999–2022), grouped by race, cancer site, age group, and sex."
   },
   {
     "objectID": "blog.html#overview",
     "href": "blog.html#overview",
-    "title": "New Project",
+    "title": "Data Science Blog",
     "section": "",
     "text": "Write a brief description of the project here."
   },
   {
     "objectID": "blog.html#details",
     "href": "blog.html#details",
-    "title": "New Project",
+    "title": "Data Science Blog",
     "section": "",
     "text": "What I did\nTools used\nResults"
   },
@@ -139,5 +139,54 @@
     "title": "About Me",
     "section": "Contact",
     "text": "Contact\n\nEmail: nchamp@byu.du\nGitHub: github.com/nchamp22\nLinkedIn: linkedin.com/in/noah-champagne\n\n\nThis portfolio showcases my learning progress and projects completed during my data science studies."
+  },
+  {
+    "objectID": "blog.html#working-with-data-in-pandas",
+    "href": "blog.html#working-with-data-in-pandas",
+    "title": "Data Science Blog:",
+    "section": "",
+    "text": "In this tutorial, readers will learn how to import a dataset, clean and filter the data, and create visualizations using Pandas to explore and analyze it. Specifically, they will work with a dataset containing US cancer incidence rates (1999–2022), grouped by race, cancer site, age group, and sex, but the Pandas techniques demonstrated can be applied to any dataset they choose."
+  },
+  {
+    "objectID": "blog.html#introduction-to-the-data",
+    "href": "blog.html#introduction-to-the-data",
+    "title": "Data Science Blog: Working with Data in Pandas Tutorial",
+    "section": "Introduction to the Data",
+    "text": "Introduction to the Data\nAs mentioned in the blog introduction, we will be working with a dataset containing U.S. cancer incidence rates from 1999 to 2022.\nThe dataset includes the following variables:\n\nRace: American Indian or Alaska Native, Asian or Pacific Islander, Black or African American, White, and Other.\nCancer site: The location of the cancer, such as stomach, small intestine, tonsil, salivary gland, and others.\nAge: Grouped into 4-year intervals from &lt;1 in some cases to 85+ (e.g., 20–24, 25–29, etc.).\nRates: Calculated per 100,000 people.\n\nThe dataset contains 12,532 rows and represents a subset of all cancer data collected during this period.\n\nUnited States and Puerto Rico Cancer Statistics, 1999-2022 Incidence\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRace\nRace Code\nCancer Sites\nCancer Sites Code\nAge Groups\nAge Groups Code\nSex\nSex Code\nCount\n\n\n\n\nAsian or Pacific Islander\nA-PI\nLung and Bronchus\n22030\n85+ years\n85\nFemale\nF\n5305\n\n\nAsian or Pacific Islander\nA-PI\nLung and Bronchus\n22030\n85+ years\n85\nMale\nM\n5773\n\n\nAsian or Pacific Islander\nA-PI\nTrachea, Mediastinum and Other Respiratory Organs\n22060\n1-4 years\n1-4\nFemale\nF\n16\n\n\nAsian or Pacific Islander\nA-PI\nTrachea, Mediastinum and Other Respiratory Organs\n22060\n15-19 years\n15-19\nMale\nM\n53"
+  },
+  {
+    "objectID": "blog.html#loading-in-the-data",
+    "href": "blog.html#loading-in-the-data",
+    "title": "Data Science Blog: Working with Data in Pandas Tutorial",
+    "section": "Loading in the Data",
+    "text": "Loading in the Data\nNow that we understand what we are working with, we can load in the data. In Pandas, we can read in a CSV file with the following code (click on the dropdown arrow beside the word “Code” to see the code and comments that go along with it):\n\n\nCode\nimport pandas as pd\n\ndf = pd.read_csv(\"cancer.csv\")\ndf.head()\n\n\n\n\n\n\n\n\n\nNotes\nRace\nRace Code\nCancer Sites\nCancer Sites Code\nAge Groups\nAge Groups Code\nSex\nSex Code\nCount\n\n\n\n\n0\nNaN\nAmerican Indian or Alaska Native\n1002-5\nAll Invasive Cancer Sites Combined\n0\n&lt; 1 year\n1\nFemale\nF\n123.0\n\n\n1\nNaN\nAmerican Indian or Alaska Native\n1002-5\nAll Invasive Cancer Sites Combined\n0\n&lt; 1 year\n1\nMale\nM\n139.0\n\n\n2\nNaN\nAmerican Indian or Alaska Native\n1002-5\nAll Invasive Cancer Sites Combined\n0\n1-4 years\n1-4\nFemale\nF\n378.0\n\n\n3\nNaN\nAmerican Indian or Alaska Native\n1002-5\nAll Invasive Cancer Sites Combined\n0\n1-4 years\n1-4\nMale\nM\n520.0\n\n\n4\nNaN\nAmerican Indian or Alaska Native\n1002-5\nAll Invasive Cancer Sites Combined\n0\n5-9 years\n5-9\nFemale\nF\n288.0"
+  },
+  {
+    "objectID": "blog.html#cleaning-and-filtering-the-data",
+    "href": "blog.html#cleaning-and-filtering-the-data",
+    "title": "Data Science Blog: Working with Data in Pandas",
+    "section": "Cleaning and Filtering the Data",
+    "text": "Cleaning and Filtering the Data\nIn our cancer.csv file, some data is not relevant to my analysis. I am only interested in specific cancer types and known races, so I will exclude entries where the cancer type is “All Invasive Cancer Sites Combined” and where the race is “Other Races and Unknown Combined”. This allows me to focus solely on the cancers and races of interest."
+  },
+  {
+    "objectID": "blog.html#filtering-the-data",
+    "href": "blog.html#filtering-the-data",
+    "title": "Data Science Blog: Working with Data in Pandas Tutorial",
+    "section": "Filtering the Data",
+    "text": "Filtering the Data\nIn our cancer.csv file, some data is not relevant to my analysis. I am only interested in specific cancer types and known races, so I will exclude entries where the cancer type is “All Invasive Cancer Sites Combined” and where the race is “Other Races and Unknown combined”. This allows me to focus solely on the cancers and races of interest. We also have a “Notes” column that doesn’t contain any data, so let’s remove that too.\nSpelling is crucial in this step. In this dataset from the US government’s data.gov website, “All Invasive Cancer Sites Combined” uses an uppercase “C” in “Combined,”” whereas “Other Races and Unknown combined” uses a lowercase “c”.\n\n\nCode\nimport pandas as pd\n\ndf = pd.read_csv(\"cancer.csv\")\n\n# Filter the rows\ndf_filtered = df[\n    (df['Cancer Sites'] != \"All Invasive Cancer Sites Combined\") &\n    (df['Race'] != \"Other Races and Unknown combined\")\n]\n\n# Drop the 'Notes' column if it exists\ndf_filtered = df_filtered.drop(columns=['Notes'])\n\n# Drop rows where all remaining values are NaN\ndf_filtered = df_filtered.dropna(how='all')\n\n# Display the filtered data\ndf_filtered\n\n\n\n\n\n\n\n\n\nRace\nRace Code\nCancer Sites\nCancer Sites Code\nAge Groups\nAge Groups Code\nSex\nSex Code\nCount\n\n\n\n\n38\nAmerican Indian or Alaska Native\n1002-5\nOral Cavity and Pharynx\n20010-20100\n20-24 years\n20-24\nFemale\nF\n16.0\n\n\n39\nAmerican Indian or Alaska Native\n1002-5\nOral Cavity and Pharynx\n20010-20100\n20-24 years\n20-24\nMale\nM\n19.0\n\n\n40\nAmerican Indian or Alaska Native\n1002-5\nOral Cavity and Pharynx\n20010-20100\n25-29 years\n25-29\nFemale\nF\n26.0\n\n\n41\nAmerican Indian or Alaska Native\n1002-5\nOral Cavity and Pharynx\n20010-20100\n25-29 years\n25-29\nMale\nM\n28.0\n\n\n42\nAmerican Indian or Alaska Native\n1002-5\nOral Cavity and Pharynx\n20010-20100\n30-34 years\n30-34\nFemale\nF\n32.0\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n10420\nWhite\n2106-3\nMale Breast, In Situ\nBreast-InSitu-Male\n65-69 years\n65-69\nMale\nM\n571.0\n\n\n10421\nWhite\n2106-3\nMale Breast, In Situ\nBreast-InSitu-Male\n70-74 years\n70-74\nMale\nM\n511.0\n\n\n10422\nWhite\n2106-3\nMale Breast, In Situ\nBreast-InSitu-Male\n75-79 years\n75-79\nMale\nM\n443.0\n\n\n10423\nWhite\n2106-3\nMale Breast, In Situ\nBreast-InSitu-Male\n80-84 years\n80-84\nMale\nM\n282.0\n\n\n10424\nWhite\n2106-3\nMale Breast, In Situ\nBreast-InSitu-Male\n85+ years\n85\nMale\nM\n167.0\n\n\n\n\n10273 rows × 9 columns"
+  },
+  {
+    "objectID": "blog.html#plotting-with-pandas",
+    "href": "blog.html#plotting-with-pandas",
+    "title": "Data Science Blog: Working with Data in Pandas Tutorial",
+    "section": "Plotting with Pandas",
+    "text": "Plotting with Pandas\nNow that we have our data cleaned and ready, it is time to explore some of Pandas’ visualization tools. In this tutorial, we will specifically look at the following plots:\n\nBar charts\n\nStacked bar charts\n\nBox plots\n\nHeat maps\n\nPie charts\n\nScatter plots\n\n\n1. Bar Charts\nBar charts are the perfect tool for grouping our cancer data by something specific like cancer sites or race. In Pandas, we can use the following code to group data, sum the counts, and plot it. Notice how the paramater kind is used to pick the type of chart:\n\n\nCode\ndf_filtered.groupby('Cancer Sites')['Count'].sum().sort_values().plot(kind='bar')\n\n\n\n\n\n\n\n\n\nAs you can see, this graph is a little hard to interpret because our dataset contains many different cancer sites. To make the graph more readable, let’s focus on just a handful of cancer sites: Stomach, Lung and Bronchus, Soft Tissue including Heart, Female Breast, Prostate, Kidney and Renal Pelvis, Brain, and Leukemias.\nHere is the code for that, with accompanying comments. Notice how we create a specific list of sites we want to include and then use the .isin() method to filter for them when we generate the plot:\n\n\nCode\n# List of specific cancer sites\nselected_sites = [\n    \"Stomach\",\n    \"Lung and Bronchus\",\n    \"Soft Tissue including Heart\",\n    \"Female Breast\",\n    \"Prostate\",\n    \"Kidney and Renal Pelvis\",\n    \"Brain\",\n    \"Leukemias\"\n]\n\n# Plot only the selected sites using the \ndf[df['Cancer Sites'].isin(selected_sites)].groupby('Cancer Sites')['Count'].sum().sort_values().plot(kind='bar')\n\n\n\n\n\n\n\n\n\nFrom this chart, we can easily see that certain types of cancer—such as Lung, Prostate, and Breast—are much more prevelant than others like Stomach or brain cancer.\n\n\n2. Stacked Bar Charts\nWhen we want to have two groups in our plot, say, showing how incidence is distributed across races for each cancer type, we can use stacked bar charts.\n\n\nCode\n# List of specific cancer sites, expanded\nselected_sites = [\n    \"Stomach\",\n    \"Lung and Bronchus\",\n    \"Soft Tissue including Heart\",\n    \"Female Breast\",\n    \"Prostate\",\n    \"Kidney and Renal Pelvis\",\n    \"Brain\",\n    \"Leukemias\",\n    \"Oral Cavity and Pharynx\",\n    \"Salivary Gland\",\n    \"Esophagus\",\n    \"Liver and Intrahepatic Bile Duct\",\n    \"Melanoma of the Skin\",\n    \"Non-Hodgkin Lymphoma\",\n    \"Eye and Orbit\",\n    \"Endocrine System\",\n    \"Thyroid\"\n]\n\n# Filter for the selected cancer sites\ndf_selected = df_filtered[df_filtered['Cancer Sites'].isin(selected_sites)]\n\n# Pivot table: Cancer Sites x Sex\ndf_pivot_sex = df_selected.pivot_table(\n    index='Cancer Sites',\n    columns='Sex',\n    values='Count',\n    aggfunc='sum'\n)\n\n# Plot stacked bar chart\ndf_pivot_sex.plot(kind='bar', stacked=True)"
+  },
+  {
+    "objectID": "blog.html#plotting-with-pandas-1",
+    "href": "blog.html#plotting-with-pandas-1",
+    "title": "Data Science Blog: Working with Data in Pandas Tutorial",
+    "section": "Plotting with Pandas",
+    "text": "Plotting with Pandas\nNow that we have our data cleaned and ready, it is time to explore some of Pandas’ visualization tools. In this tutorial, we will specifically look at the following plots:\n\nBar charts\n\nStacked bar charts\n\nBox plots\n\nHeat maps\n\nPie charts\n\nScatter plots"
   }
 ]
