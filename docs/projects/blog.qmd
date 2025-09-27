@@ -1,0 +1,16 @@
+---
+title: "New Project"
+format: html
+---
+
+# My New Project 🚀
+
+This is where I describe my new project.
+
+## Overview
+Write a brief description of the project here.
+
+## Details
+- What I did
+- Tools used
+- Results
